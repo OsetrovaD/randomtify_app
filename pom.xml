@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.osetrova</groupId>
+    <artifactId>randomtify-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>mvn-golang</packaging>
+
+    <properties>
+        <go.wrapper.plugin.version>2.2.0</go.wrapper.plugin.version>
+        <golang.version>1.17</golang.version>
+<!--        <golang.sdkDownloadUrl>https://go.dev/dl/go1.17.5.darwin-amd64.tar.gz</golang.sdkDownloadUrl>-->
+    </properties>
+
+    <build>
+        <sourceDirectory>${basedir}</sourceDirectory>
+        <directory>${project.basedir}/bin</directory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>com.igormaznitsa</groupId>
+                <artifactId>mvn-golang-wrapper</artifactId>
+                <version>${go.wrapper.plugin.version}</version>
+
+                <configuration>
+<!--                    <sdkDownloadUrl>${golang.sdkDownloadUr}</sdkDownloadUrl>-->
+                    <goVersion>${golang.version}</goVersion>
+                    <useEnvVars>true</useEnvVars>
+                    <env>
+                        <GO111MODULE>on</GO111MODULE>
+                        <CGO_ENABLED>0</CGO_ENABLED>
+                        <GONOSUMMDB>*</GONOSUMMDB>
+                        <GOSUMDB>off</GOSUMDB>
+                    </env>
+                    <command/>
+                </configuration>
+
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>default-fix</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-generate</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                    <execution>
+                        <id>default-get</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>2.22.2</version>-->
+<!--            </plugin>-->
+        </plugins>
+    </build>
+
+</project>
