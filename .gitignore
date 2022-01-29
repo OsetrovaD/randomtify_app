@@ -6,3 +6,4 @@ bin/
 **/mvnw
 *.cmd
 go.sum
+.env

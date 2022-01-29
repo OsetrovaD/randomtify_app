@@ -2,49 +2,21 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
+	"github.com/joho/godotenv"
 	"os"
-	"strings"
-)
-
-var (
-	args  []string
-	flags map[string]string
+	fl "randomtify_app/flags"
+	"randomtify_app/services/commands"
 )
 
 func main() {
-	if err := parseCommandLineArgs(os.Args); err != nil {
-		panic(err)
+	if err := godotenv.Load(); err != nil {
+		fmt.Println("No .env file found")
+		return
 	}
-	fmt.Println(args)
-	fmt.Println(flags)
-}
-func parseCommandLineArgs(osArgs []string) error {
-	args = []string{}
-	flags = map[string]string{}
-	for i := 1; i < len(osArgs); i++ {
-		arg := osArgs[i]
-		switch {
-		case strings.HasPrefix(arg, "--"):
-			if err := addFlag(&osArgs, &i, &arg, 2); err != nil {
-				return err
-			}
-		case strings.HasPrefix(arg, "-"):
-			if err := addFlag(&osArgs, &i, &arg, 1); err != nil {
-				return err
-			}
-		default:
-			args = append(args, arg)
-		}
+	command, flags, err := fl.ParseCommandLineArgs(os.Args)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
 	}
-	return nil
-}
-
-func addFlag(osArgs *[]string, index *int, flagName *string, firstSymbolIndex int) error {
-	if len(*osArgs) <= *index+1 {
-		return errors.Errorf("'%s' flag doesn't have value", *flagName)
-	}
-	flags[(*flagName)[firstSymbolIndex:]] = (*osArgs)[*index+1]
-	*index++
-	return nil
+	commands.GetProcessor().Process(command, flags)
 }
