@@ -18,7 +18,7 @@ const (
 var (
 	CommandsFlags = map[string]map[string]struct{}{
 		commands.HelpCommand: {},
-		commands.RandomtifyCommand: {
+		commands.SearchCommand: {
 			QueryShortFlag:       {},
 			QueryFullFlag:        {},
 			AlphabetFullFlag:     {},

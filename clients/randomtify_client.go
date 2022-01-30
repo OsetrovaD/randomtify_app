@@ -3,6 +3,7 @@ package clients
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"randomtify_app/services"
 	"time"
 )
@@ -10,8 +11,7 @@ import (
 type RandomtifyClient interface {
 	GetAlphabets() (resp *http.Response, err error)
 	GetArtist(name string) (resp *http.Response, err error)
-	GetAllArtists() (resp *http.Response, err error)
-	GetRandomArtist(query, alphabet string, charsAmount int) (resp *http.Response, err error)
+	GetRandomArtist(query, alphabet, charsAmount string) (resp *http.Response, err error)
 }
 
 type randomtifyClient struct {
@@ -45,10 +45,18 @@ func (rc *randomtifyClient) GetArtist(name string) (resp *http.Response, err err
 	return rc.client.Do(req)
 }
 
-func (rc *randomtifyClient) GetAllArtists() (resp *http.Response, err error) {
-	return nil, nil
+func (rc *randomtifyClient) GetRandomArtist(query, alphabet, charsAmount string) (resp *http.Response, err error) {
+	req, err := http.NewRequest("GET", rc.config.RandomtifyAppUrl+rc.config.SearchPath, nil)
+	q := req.URL.Query()
+	addUrlQueryParam(&q, "query", query)
+	addUrlQueryParam(&q, "alphabet", alphabet)
+	addUrlQueryParam(&q, "charsAmount", charsAmount)
+	req.URL.RawQuery = q.Encode()
+	return rc.client.Do(req)
 }
 
-func (rc *randomtifyClient) GetRandomArtist(query, alphabet string, charsAmount int) (resp *http.Response, err error) {
-	return nil, nil
+func addUrlQueryParam(query *url.Values, paramName, value string) {
+	if value != "" {
+		(*query).Add(paramName, value)
+	}
 }

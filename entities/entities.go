@@ -23,9 +23,9 @@ func (s *Song) String() string {
 }
 
 type Artist struct {
-	Name       string `json:"name"`
-	Rating     string `json:"rating"`
-	SpotifyUrl string `json:"spotifyUrl"`
+	Name       string
+	Rating     string
+	SpotifyUrl string
 }
 
 func (a *Artist) String() string {
@@ -55,4 +55,12 @@ func (a *AllArtistsInfo) String() string {
 		res = append(res, artist.String())
 	}
 	return strings.Join(res, "\n")
+}
+
+type RandomArtistInfo struct {
+	Name string
+}
+
+func (rai *RandomArtistInfo) String() string {
+	return fmt.Sprintf("Artist name: %s", rai.Name)
 }

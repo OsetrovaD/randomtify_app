@@ -2,7 +2,7 @@ package commands
 
 const (
 	HelpCommand               = "help"
-	RandomtifyCommand         = "randomtify"
+	SearchCommand             = "search"
 	ShowArtistCommand         = "show-artist"
 	AvailableAlphabetsCommand = "available-alphabets"
 )
