@@ -4,12 +4,18 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"os"
+	"path"
 	fl "randomtify_app/flags"
 	"randomtify_app/services/commands"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
+	e, err := os.Executable()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if err = godotenv.Load(path.Dir(e) + "/.env"); err != nil {
 		fmt.Println("No .env file found")
 		return
 	}

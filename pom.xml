@@ -17,7 +17,7 @@
     <build>
         <sourceDirectory>${basedir}</sourceDirectory>
         <directory>${project.basedir}/bin</directory>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>randomtify</finalName>
 
         <plugins>
             <plugin>
